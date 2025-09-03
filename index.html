@@ -472,7 +472,7 @@
             '<div class="card muted small">Таны дугаарт илгээмж бүртгэгдээгүй байна.</div>'
           return
         }
-        const visible = items.filter((it) => it.status !== "хүлээж авсан")
+        const visible = items
         if (visible.length === 0) {
           userResults.innerHTML =
             '<div class="card muted small">Таны дугаарт одоогоор харагдах илгээмж алга байна.</div>'
