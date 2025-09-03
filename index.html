@@ -402,6 +402,8 @@
       </div>
     </footer>
 
+    <script src="./jquery-3.7.1.min.js"></script>
+
     <script>
       const KEY = "cargo_demo_v3",
         PASS = "admin123"
@@ -481,12 +483,12 @@
           (s, x) => s + Number(x.qty0) * Number(x.price0),
           0
         )
-        userSummary.innerHTML = (
-          <div class="card small muted">
-            Нийт: <b>${totalQty}</b> ширхэг · Нийт дүн:{" "}
-            <b>₮ ${fmt.format(totalAmt)}</b>
-          </div>
-        )
+        userSummary.innerHTML = `
+            <div class="card small muted">
+                Нийт: <b>${totalQty}</b> ширхэг · Нийт дүн:
+                <b>₮ ${fmt.format(totalAmt)}</b>
+            </div>
+        `
         const groups = {}
         visible.forEach((i) => (groups[i.track] ||= []).push(i))
         const html = Object.keys(groups)
@@ -499,7 +501,8 @@
               0
             )
             const rows = arr
-              .map((it) => (
+              .map(
+                (it) => `
                 <tr>
                   <td>${it.track}</td>
                   <td>${it.qty}</td>
@@ -507,9 +510,10 @@
                   <td>${it.status}</td>
                   <td>${it.date}</td>
                 </tr>
-              ))
+              `
+              )
               .join("")
-            return (
+            return `
               <div class="card" style="padding:10px;margin-bottom:10px">
                 <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px">
                   <div>
@@ -532,7 +536,7 @@
                   <tbody>${rows}</tbody>
                 </table>
               </div>
-            )
+            `
           })
           .join("")
         userResults.innerHTML = html
@@ -622,7 +626,7 @@
           .forEach((phone) => {
             if (currentFilter && !phone.includes(currentFilter)) return
             db[phone].forEach((it) => {
-              rows.push(
+              rows.push(`
                 <tr>
                   <td>${phone}</td>
                   <td>${it.track}</td>
@@ -657,7 +661,7 @@
                     </button>
                   </td>
                 </tr>
-              )
+              `)
             })
           })
         if (rows.length === 0) {
@@ -665,7 +669,7 @@
             '<div class="muted small">Бүртгэл олдсонгүй</div>'
           return
         }
-        allTableWrap.innerHTML = (
+        allTableWrap.innerHTML = `
           <table>
             <thead>
               <tr>
@@ -680,7 +684,7 @@
             </thead>
             <tbody id="allBody">${rows.join("")}</tbody>
           </table>
-        )
+        `
         document.getElementById("allBody").addEventListener("click", (e) => {
           const btn = e.target.closest("button")
           if (!btn) return
@@ -735,11 +739,10 @@
           db[phone]
             .filter((x) => x.status === "хүлээж авсан")
             .forEach((it) => {
-              rows.push(
+              rows.push(`
                 <div class="card small" style="padding:6px;margin-bottom:4px">
                   Утас: ${phone}, Трак: ${it.track}, Огноо: ${it.date}
-                </div>
-              )
+                </div>`)
             })
         )
         if (rows.length === 0) {
